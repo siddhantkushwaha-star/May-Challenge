@@ -1,0 +1,60 @@
+GFG : 04 May : Smaller distinct windows 
+
+Smallest distinct window
+Difficulty: MediumAccuracy: 31.85%Submissions: 106K+Points: 4
+Given a string str, your task is to find the length of the smallest window that contains all the characters of the given string at least once.
+
+Example:
+
+Input: str = "aabcbcdbca"
+Output: 4
+Explanation: Sub-String "dbca" has the smallest length that contains all the characters of str.
+Input: str = "aaab"
+Output: 2
+Explanation: Sub-String "ab" has the smallest length that contains all the characters of str.
+Input: str = "geeksforgeeks"
+Output: 8
+Explanation: There are multiple substring with smallest length that contains all characters of str, "geeksfor" and "forgeeks". 
+Constraints:
+1 ≤ str.size() ≤ 105
+str contains only lower-case english alphabets.
+
+
+Solution : 
+
+class Solution {
+    public int findSubString(String str) {
+        // code here
+        int n = str.length();
+
+        // Step 1: Count unique characters in string
+        Set<Character> uniqueChars = new HashSet<>();
+        for (char c : str.toCharArray()) {
+            uniqueChars.add(c);
+        }
+        int totalUnique = uniqueChars.size();
+
+        // Step 2: Sliding window to find smallest window with all unique characters
+        Map<Character, Integer> freqMap = new HashMap<>();
+        int start = 0, minLen = Integer.MAX_VALUE;
+        int count = 0;
+
+        for (int end = 0; end < n; end++) {
+            char endChar = str.charAt(end);
+            freqMap.put(endChar, freqMap.getOrDefault(endChar, 0) + 1);
+
+            if (freqMap.size() == totalUnique) {
+                // Try to shrink the window from start
+                while (freqMap.get(str.charAt(start)) > 1) {
+                    freqMap.put(str.charAt(start), freqMap.get(str.charAt(start)) - 1);
+                    start++;
+                }
+                // Update minLen
+                minLen = Math.min(minLen, end - start + 1);
+            }
+        }
+
+        return minLen;
+       }
+       
+}
