@@ -1,0 +1,73 @@
+GFG : Fibonacci Sum
+
+Given a number positive number N, find the value of f0 + f1 + f2 +... + fN where fi indicates ith Fibonacci number.
+Remember that f0 = 0, f1 = 1, f2 = 1, f3 = 2, f4 = 3, f5 = 5,
+Since the answer can be very large, the answer takes modulo with 1000000007 and returned.
+
+Example 1:
+
+Input:
+N = 3
+Output:
+4
+Explanation:
+0 + 1 + 1 + 2  = 4
+Example 2:
+
+Input :
+N = 4
+Output :
+7
+Explanation :
+0 + 1 + 1 + 2 + 3 = 7
+
+Your Task:
+You don't need to read input or print anything. Your task is to complete the function fibSum() which takes an integer N as input parameter and returns the sum of all the Fibonacci numbers from F0 to FN.
+
+Expected Time Complexity: O(Log N)
+Expected Space Complexity: O(1)
+ 
+
+Constraints:
+1 <= N <= 100000\
+
+
+Solution : 
+
+class Solution {
+      static final int MOD = 1000000007;
+    static long fibSum(long N) {
+        // code here
+        if (N == 0) return 0;
+        return (fib(N + 2) - 1 + MOD) % MOD;
+    }
+     private static long fib(long n) {
+        if (n == 0) return 0;
+        long[][] F = {{1, 1}, {1, 0}};
+        power(F, n - 1);
+        return F[0][0];
+}
+private static void power(long[][] F, long n) {
+        if (n == 0 || n == 1)
+            return;
+
+        long[][] M = {{1, 1}, {1, 0}};
+        power(F, n / 2);
+        multiply(F, F);
+
+        if (n % 2 != 0)
+            multiply(F, M);
+    }
+
+    private static void multiply(long[][] F, long[][] M) {
+        long x = (F[0][0] * M[0][0] % MOD + F[0][1] * M[1][0] % MOD) % MOD;
+        long y = (F[0][0] * M[0][1] % MOD + F[0][1] * M[1][1] % MOD) % MOD;
+        long z = (F[1][0] * M[0][0] % MOD + F[1][1] * M[1][0] % MOD) % MOD;
+        long w = (F[1][0] * M[0][1] % MOD + F[1][1] * M[1][1] % MOD) % MOD;
+
+        F[0][0] = x;
+        F[0][1] = y;
+        F[1][0] = z;
+        F[1][1] = w;
+    }
+}
