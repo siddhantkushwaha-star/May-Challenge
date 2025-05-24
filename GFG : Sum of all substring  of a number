@@ -1,0 +1,40 @@
+GFG : sum of all substring of a number
+
+Given an integer s represented as a string, the task is to get the sum of all possible sub-strings of this string.
+
+Note: The number may have leading zeros.
+It is guaranteed that the total sum will fit within a 32-bit signed integer.
+
+Examples:
+
+Input: s = "6759"
+Output: 8421
+Explanation:
+Sum = 6 + 7 + 5 + 9 + 67 + 75 + 59 + 675 + 759 + 6759 = 8421
+Input: s = "421"
+Output: 491
+Explanation: 
+Sum = 4 + 2 + 1 + 42 + 21 + 421 = 491
+Constraints:
+1 <= |s| <= 9
+
+Solution : 
+
+class Solution {
+    public static int sumSubstrings(String s) {
+        // code here
+          int n = s.length();
+        long result = 0;
+        long prev = 0;
+        int mod = 1000000007; // use mod only if constraints allow overflow, not needed here
+
+        for (int i = 0; i < n; i++) {
+            int num = s.charAt(i) - '0';
+            prev = prev * 10 + (long) num * (i + 1);
+            result += prev;
+        }
+
+        return (int) result;
+        
+    }
+}
