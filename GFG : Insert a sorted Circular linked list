@@ -1,0 +1,72 @@
+GFG : Insert a sorted linked list
+
+
+Insert in Sorted Circular Linked List
+Difficulty: MediumAccuracy: 25.56%Submissions: 124K+Points: 4Average Time: 20m
+Given a sorted circular linked list, the task is to insert a new node in this circular linked list so that it remains a sorted circular linked list.
+
+Examples:
+
+Input: head = 1->2->4, data = 2
+Output: 1->2->2->4
+Explanation: We can add 2 after the second node.
+
+Input: head = 1->4->7->9, data = 5
+Output: 1->4->5->7->9
+Explanation: We can add 5 after the second node.
+
+Constraints:
+2 <= number of nodes <= 106
+0 <= node->data <= 106
+0 <= data <= 106
+
+
+Solution : 
+
+/*
+class Node {
+    int data;
+    Node next;
+
+    Node(int x) {
+        data = x;
+        next = null;
+    }
+} */
+
+class Solution {
+    public Node sortedInsert(Node head, int data) {
+        
+       Node newNode = new Node(data);
+        
+        // If the list is empty, create a single node circular list
+        if (head == null) {
+            newNode.next = newNode;
+            return newNode;
+        }
+        
+        Node current = head;
+        
+        // Case 1: Insert before head (i.e., smallest element)
+        if (data <= head.data) {
+            // Find the last node to link it with new node
+            while (current.next != head) {
+                current = current.next;
+            }
+            current.next = newNode;
+            newNode.next = head;
+            return newNode; // new node becomes the new head
+        }
+        
+        // Case 2: Insert in the middle or end
+        current = head;
+        while (current.next != head && current.next.data < data) {
+            current = current.next;
+        }
+
+        newNode.next = current.next;
+        current.next = newNode;
+        
+        return head;
+    }
+}
