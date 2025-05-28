@@ -1,0 +1,50 @@
+GFG : Find rectangle with corner as 1
+
+Given an n x m binary matrix mat[][] containing only 0s and 1s, determine if there exists a rectangle within the matrix such that all four corners of the rectangle are 1. If such a rectangle exists, return true; otherwise, return false.
+
+Example:
+
+Input: mat[][] =
+[[1, 0, 0, 1, 0],
+[0, 0, 1, 0, 1],
+[0, 0, 0, 1, 0], 
+[1, 0, 1, 0, 1]] 
+Output: true
+Explanation: Valid corners are at index (1,2), (1,4), (3,2), (3,4) 
+Input:mat[][] =
+[[0, 0, 0],
+[0, 0, 0],
+[0, 0, 0]]
+Output: false
+Explanation: There are no valid corners.
+Constraints:
+1 <= n, m <= 200
+0 <= mat[i] <= 1
+
+
+Solution : 
+
+class Solution {
+    public boolean ValidCorner(int mat[][]) {
+        // Code here
+        
+        int n = mat.length;
+        int m = mat[0].length;
+        
+        for(int i=0; i<n-1; i++){
+            for(int j=i+1; j<n; j++){
+                HashSet<Integer>set = new HashSet<>();
+                for(int col = 0; col<m; col++){
+                    if(mat[i][col] == 1 && mat[j][col] == 1){
+                        for(int k=0; k<col; k++){
+                            if(mat[i][k] == 1 && mat[j][k] == 1){
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+}
